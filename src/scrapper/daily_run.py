@@ -81,12 +81,15 @@ def _load_scrapers(wanted: list[str]) -> dict:
         except Exception as e:
             log.error("Could not load jumia scraper: %s", e)
 
-    # Konga and Temu share a module. Adjust the imported names here if the
-    # functions in konga_temu_scraper.py are called something else.
-   if "konga" in wanted or "temu" in wanted:
+    # Konga and Temu share one module with a single entry point that takes the
+    # platform as its first argument: scrape(platform, category, pages).
+    # partial() binds the platform so both expose the (category, pages)
+    # signature this orchestrator calls.
+    if "konga" in wanted or "temu" in wanted:
         try:
             from functools import partial
             from .konga_temu_scraper import scrape as kt_scrape
+
             for p in ("konga", "temu"):
                 if p in wanted:
                     scrapers[p] = partial(kt_scrape, p)
