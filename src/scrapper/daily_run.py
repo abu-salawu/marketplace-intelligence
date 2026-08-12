@@ -83,25 +83,13 @@ def _load_scrapers(wanted: list[str]) -> dict:
 
     # Konga and Temu share a module. Adjust the imported names here if the
     # functions in konga_temu_scraper.py are called something else.
-    if "konga" in wanted or "temu" in wanted:
+   if "konga" in wanted or "temu" in wanted:
         try:
-            from . import konga_temu_scraper as kt
-
-            if "konga" in wanted:
-                fn = getattr(kt, "scrape_konga", None) or getattr(
-                    kt, "scrape_category", None
-                )
-                if fn:
-                    scrapers["konga"] = fn
-                else:
-                    log.error("konga_temu_scraper exposes no usable konga entry point")
-
-            if "temu" in wanted:
-                fn = getattr(kt, "scrape_temu", None)
-                if fn:
-                    scrapers["temu"] = fn
-                else:
-                    log.error("konga_temu_scraper exposes no usable temu entry point")
+            from functools import partial
+            from .konga_temu_scraper import scrape as kt_scrape
+            for p in ("konga", "temu"):
+                if p in wanted:
+                    scrapers[p] = partial(kt_scrape, p)
         except Exception as e:
             log.error("Could not load konga/temu scraper: %s", e)
 
