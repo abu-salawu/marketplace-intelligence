@@ -87,11 +87,7 @@ cd dashboard
 .\run.ps1       # starts the dashboard
 ```
 
-Launch from the **repository root** so the sidebar's default `data/processed`
-resolves. The three result tables are committed, so the dashboard opens on real
-results with nothing to configure. If any is missing or malformed it falls back
-to clearly labelled demonstration data — those numbers are generated and must
-never be reported.
+
 
 **Run the pipeline in Google Colab (GPU recommended):**
 ```python
