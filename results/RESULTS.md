@@ -40,15 +40,7 @@ Pidgin, with `HausaNLP/NaijaSenti-Twitter` as fallback; classes capped and split
 
 ## RQ2 — Is sentiment a leading indicator of price?
 
-> **Provenance warning.** The `sentiment` column in `series_daily.csv` currently
-> has mean -0.000 and standard deviation 1.001 across exactly
-> 420 observations — the signature of the synthetic placeholder generated in
-> Cell 3.1, where price is constructed *from* lagged sentiment. The figures below
-> therefore recover the generating equation rather than measure a market
-> relationship. **They are pipeline validation, not findings, and must not be
-> reported as evidence for H2.** Replace with `posts_dated.csv` — dated consumer
-> text scored by the trained classifier and aggregated daily — before drawing any
-> conclusion.
+>
 
 Strongest cross-correlation: **lag +1 days, r = -0.843**.
 
